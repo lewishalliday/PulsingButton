@@ -80,7 +80,7 @@ open class PulsingButton: UIControl {
     }
 
     /// The image displayed on the button in its normal state.
-    @IBInspectable open var normalImage: UIImage? {
+    @IBInspectable open var image: UIImage? {
         didSet {
             updateButtonImage()
         }
@@ -120,10 +120,21 @@ open class PulsingButton: UIControl {
     ///   - pulseScaleFactor: The scale factor by which the pulse will expand.
     ///   - pulseRepeatCount: The number of times the pulse animation will repeat.
     ///   - pulseColor: The color of the pulse effect.
-    ///   - normalImage: The image for the button's normal state.
+    ///   - image: The image for the button's normal state.
     ///   - selectedImage: The image for the button's selected state.
     ///   - backgroundColor: The background color of the button.
-    public convenience init(frame: CGRect, pulseRadius: Double, pulseCount: Int, pulseDuration: Double, intervalBetweenPulses: Double, pulseScaleFactor: CGFloat, pulseRepeatCount: Int, pulseColor: UIColor, normalImage: UIImage?, selectedImage: UIImage?, backgroundColor: UIColor?) {
+    public convenience init(frame: CGRect,
+                            pulseRadius: Double,
+                            pulseCount: Int,
+                            pulseDuration: Double,
+                            intervalBetweenPulses: Double,
+                            pulseScaleFactor: CGFloat,
+                            pulseRepeatCount: Int,
+                            pulseColor: UIColor,
+                            image: UIImage?,
+                            selectedImage: UIImage?,
+                            backgroundColor: UIColor?)
+    {
         self.init(frame: frame)
         self.pulseRadius = pulseRadius
         self.pulseCount = pulseCount
@@ -132,7 +143,7 @@ open class PulsingButton: UIControl {
         self.pulseScaleFactor = pulseScaleFactor
         self.pulseRepeatCount = pulseRepeatCount
         self.pulseColor = pulseColor
-        self.normalImage = normalImage
+        self.image = image
         self.selectedImage = selectedImage
         buttonBackgroundColor = backgroundColor
         setupButton()
@@ -176,7 +187,7 @@ open class PulsingButton: UIControl {
         let inset: CGFloat = 12
         let size = max(0, min(bounds.width, bounds.height) - inset * 2)
         buttonImageLayer.frame = CGRect(x: (bounds.width - size) / 2, y: (bounds.height - size) / 2, width: size, height: size)
-        buttonImageLayer.contents = normalImage?.cgImage
+        buttonImageLayer.contents = image?.cgImage
         buttonImageLayer.contentsGravity = .resizeAspect
         buttonImageLayer.masksToBounds = true
         layer.addSublayer(buttonImageLayer)
