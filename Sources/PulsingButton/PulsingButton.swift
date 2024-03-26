@@ -26,6 +26,11 @@ import UIKit
 /// A customizable UIControl that displays pulsing animation around a button image.
 /// The button supports different images for its normal and selected states, customizable pulsing effects including color, radius, and animation timings.
 open class PulsingButton: UIControl {
+    public enum PulsingButtonCornerType {
+        case round
+        case fixed(_: CGFloat)
+    }
+
     private let buttonImageLayer = CALayer()
     private let backgroundLayer = CALayer()
     private var pulseLayers: [CALayer] = []
@@ -86,6 +91,8 @@ open class PulsingButton: UIControl {
         }
     }
 
+    private var cornerType: PulsingButtonCornerType = .round
+
     /// The background color of the button.
     public var buttonBackgroundColor: UIColor? {
         didSet {
@@ -124,7 +131,8 @@ open class PulsingButton: UIControl {
                             pulseColor: UIColor,
                             image: UIImage?,
                             selectedImage: UIImage?,
-                            backgroundColor: UIColor?)
+                            backgroundColor: UIColor?,
+                            cornerType: PulsingButtonCornerType?)
     {
         self.init(frame: frame)
         self.pulseCount = pulseCount
@@ -135,11 +143,12 @@ open class PulsingButton: UIControl {
         self.pulseColor = pulseColor
         self.image = image
         self.selectedImage = selectedImage
+        self.cornerType = cornerType ?? .round
         buttonBackgroundColor = backgroundColor
         setupButton()
     }
-    
-    open override func layoutSubviews() {
+
+    override open func layoutSubviews() {
         super.layoutSubviews()
         updatePulseRadius()
     }
@@ -154,7 +163,13 @@ open class PulsingButton: UIControl {
 
     /// Configures the background layer of the button.
     private func configureBackgroundLayer() {
-        layer.cornerRadius = frame.height / 2
+        switch cornerType {
+        case .round:
+            layer.cornerRadius = frame.height / 2
+        case let .fixed(val):
+            layer.cornerRadius = val
+        }
+
         backgroundLayer.frame = bounds
         backgroundLayer.backgroundColor = buttonBackgroundColor?.cgColor
         backgroundLayer.cornerRadius = layer.cornerRadius
@@ -166,10 +181,18 @@ open class PulsingButton: UIControl {
         pulseLayers.forEach { $0.removeFromSuperlayer() }
         pulseLayers.removeAll()
         
+        var cornerRadius: CGFloat
+        switch cornerType {
+        case .round:
+            cornerRadius = frame.height / 2
+        case let .fixed(val):
+            cornerRadius = val
+        }
+        
         for _ in 0 ..< pulseCount {
             let layer = CALayer()
             layer.frame = CGRect(x: 0, y: 0, width: frame.height, height: frame.height)
-            layer.cornerRadius = CGFloat(frame.height / 2)
+            layer.cornerRadius = cornerRadius
             layer.backgroundColor = pulseColor.cgColor
             layer.opacity = 0
             self.layer.insertSublayer(layer, below: backgroundLayer)
