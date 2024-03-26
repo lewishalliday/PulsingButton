@@ -113,7 +113,6 @@ open class PulsingButton: UIControl {
     /// Initializes a new `PulsingButton` with custom configurations.
     /// - Parameters:
     ///   - frame: The frame rectangle for the button, measured in points.
-    ///   - pulseRadius: The radius of the pulse effect.
     ///   - pulseCount: The number of pulses to be displayed.
     ///   - pulseDuration: The duration of the pulse animation cycle.
     ///   - intervalBetweenPulses: The time interval before the start of consecutive pulses.
@@ -124,7 +123,6 @@ open class PulsingButton: UIControl {
     ///   - selectedImage: The image for the button's selected state.
     ///   - backgroundColor: The background color of the button.
     public convenience init(frame: CGRect,
-                            pulseRadius: Double,
                             pulseCount: Int,
                             pulseDuration: Double,
                             intervalBetweenPulses: Double,
@@ -136,7 +134,6 @@ open class PulsingButton: UIControl {
                             backgroundColor: UIColor?)
     {
         self.init(frame: frame)
-        self.pulseRadius = pulseRadius
         self.pulseCount = pulseCount
         self.pulseDuration = pulseDuration
         self.intervalBetweenPulses = intervalBetweenPulses
@@ -170,7 +167,8 @@ open class PulsingButton: UIControl {
     private func configurePulseLayers() {
         pulseLayers.forEach { $0.removeFromSuperlayer() }
         pulseLayers.removeAll()
-
+        pulseRadius = frame.height
+        
         for _ in 0 ..< pulseCount {
             let layer = CALayer()
             layer.frame = CGRect(x: 0, y: 0, width: pulseRadius, height: pulseRadius)
