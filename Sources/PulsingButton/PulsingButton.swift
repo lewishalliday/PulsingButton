@@ -227,6 +227,10 @@ open class PulsingButton: UIControl {
         buttonImageLayer.contents = selectedImage?.cgImage
     }
 
+    open func updateBackgroundColor(color: UIColor) {
+        backgroundColor = color
+    }
+
     // MARK: - Update Methods
 
     /// Updates the radius of the pulse layers.
