@@ -30,13 +30,6 @@ open class PulsingButton: UIControl {
     private let backgroundLayer = CALayer()
     private var pulseLayers: [CALayer] = []
 
-    /// The radius of the pulse effect.
-    @IBInspectable open var pulseRadius: Double = 50 {
-        didSet {
-            updatePulseRadius()
-        }
-    }
-
     /// The number of pulses to be displayed around the button.
     @IBInspectable open var pulseCount: Int = 2 {
         didSet {
@@ -145,6 +138,11 @@ open class PulsingButton: UIControl {
         buttonBackgroundColor = backgroundColor
         setupButton()
     }
+    
+    open override func layoutSubviews() {
+        super.layoutSubviews()
+        updatePulseRadius()
+    }
 
     /// Sets up the initial configuration of the button and its layers.
     private func setupButton() {
@@ -167,12 +165,11 @@ open class PulsingButton: UIControl {
     private func configurePulseLayers() {
         pulseLayers.forEach { $0.removeFromSuperlayer() }
         pulseLayers.removeAll()
-        pulseRadius = frame.height
         
         for _ in 0 ..< pulseCount {
             let layer = CALayer()
-            layer.frame = CGRect(x: 0, y: 0, width: pulseRadius, height: pulseRadius)
-            layer.cornerRadius = CGFloat(pulseRadius / 2)
+            layer.frame = CGRect(x: 0, y: 0, width: frame.height, height: frame.height)
+            layer.cornerRadius = CGFloat(frame.height / 2)
             layer.backgroundColor = pulseColor.cgColor
             layer.opacity = 0
             self.layer.insertSublayer(layer, below: backgroundLayer)

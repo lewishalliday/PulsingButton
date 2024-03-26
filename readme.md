@@ -35,14 +35,13 @@ import PulsingButton
 
 ```swift
 let pulsingButton = PulsingButton(frame: CGRect(x: 100, y: 100, width: 100, height: 100),
-                                  pulseRadius: 60,
                                   pulseCount: 3,
                                   pulseDuration: 1.5,
                                   intervalBetweenPulses: 0.5,
                                   pulseScaleFactor: 2.0,
                                   pulseRepeatCount: Float.infinity,
                                   pulseColor: .blue,
-                                  normalImage: UIImage(named: "YourNormalImage"),
+                                  image: UIImage(named: "YourImage"),
                                   selectedImage: UIImage(named: "YourSelectedImage"),
                                   backgroundColor: .lightGray)
 
@@ -66,7 +65,6 @@ pulsingButton.stopPulsing()
 ### Customization
 PulsingButton allows customization of the following properties:
 
-- `pulseRadius`: The radius of the pulse effect.
 - `pulseCount`: The number of pulses.
 - `pulseDuration`: The duration of each pulse animation cycle.
 - `intervalBetweenPulses`: The interval before the start of consecutive pulses.
