@@ -228,7 +228,7 @@ open class PulsingButton: UIControl {
     }
 
     open func updateBackgroundColor(color: UIColor) {
-        backgroundColor = color
+        buttonBackgroundColor = color
     }
 
     // MARK: - Update Methods
