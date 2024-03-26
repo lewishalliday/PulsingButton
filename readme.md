@@ -17,7 +17,7 @@ You can install `PulsingButton` using the Swift Package Manager by adding the pa
 
 1. Open your project in Xcode.
 2. Navigate to `File` > `Add Packages...`.
-3. Enter `YOUR_GIT_URL` into the package repository URL text field.
+3. Enter `https://github.com/lewishalliday/PulsingButton` into the package repository URL text field.
 4. Specify the version rules or choose a specific branch or commit as needed.
 5. Click `Add Package`.
 
