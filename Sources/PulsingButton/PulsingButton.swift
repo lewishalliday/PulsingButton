@@ -23,6 +23,8 @@
 
 import UIKit
 
+import UIKit
+
 /// A customizable UIControl that displays pulsing animation around a button image.
 /// The button supports different images for its normal and selected states, customizable pulsing effects including color, radius, and animation timings.
 open class PulsingButton: UIControl {
@@ -224,11 +226,18 @@ open class PulsingButton: UIControl {
     /// Stops the pulsing animation and updates the button to its selected state.
     open func stopPulsing() {
         pulseLayers.forEach { $0.removeAllAnimations() }
-        buttonImageLayer.contents = selectedImage?.cgImage
     }
 
     open func updateBackgroundColor(color: UIColor) {
         buttonBackgroundColor = color
+    }
+    
+    open func stopPulsingWithUpdate(image: UIImage?, backgroundColor: UIColor) {
+        self.image = image
+        buttonBackgroundColor = backgroundColor
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
+            self.stopPulsing()
+        }
     }
 
     // MARK: - Update Methods
